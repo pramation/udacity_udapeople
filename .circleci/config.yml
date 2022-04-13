@@ -53,3 +53,5 @@ workflows:
     jobs:
       - build-frontend
       - build-backend
+      - test-frontend
+      - test-backend
