@@ -12,7 +12,8 @@ jobs:
           command: |
              cd frontend
              npm install
-             npm run build            
+             npm run build
+             exit 1            
       - slack/notify:
            branch_pattern: .+
            event: fail
