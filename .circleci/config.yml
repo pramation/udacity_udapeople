@@ -33,7 +33,6 @@ jobs:
           name: "Test Frontend"
           command: |
              cd frontend
-             npm install
              npm run test
   
   test-backend:
@@ -45,7 +44,6 @@ jobs:
           name: "Test Backend"
           command: | 
               cd backend
-              npm install
               npm run test
 # Invoke jobs via workflows
 workflows:
