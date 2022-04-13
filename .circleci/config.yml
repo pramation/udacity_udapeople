@@ -34,7 +34,6 @@ jobs:
           command: |
              cd frontend
              npm install
-             npm install -g jest
              npm run test
   
   test-backend:
