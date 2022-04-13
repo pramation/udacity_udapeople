@@ -86,8 +86,7 @@ jobs:
           name: "Audit Packages Frontend"
           command: | 
               cd frontend
-              npm audit fix --audit-level=critical --force
-              exit 1 
+              npm audit fix --audit-level=critical --force 
       - slack/notify:
            branch_pattern: .+
            event: fail
