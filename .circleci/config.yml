@@ -30,7 +30,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Build Frontend"
+          name: "Test Frontend"
           command: |
              cd frontend
              npm install
@@ -42,7 +42,7 @@ jobs:
     steps:
       - checkout
       - run:
-          name: "Build Backend"
+          name: "Test Backend"
           command: | 
               cd backend
               npm install
