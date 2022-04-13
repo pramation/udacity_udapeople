@@ -55,12 +55,12 @@ jobs:
       - checkout
       # Restore from cache
       - run:
-          name: "Install dependencies"
+          name: "Install dependencies Backend"
           command: | 
               cd frontend
               npm install 
       - run:
-          name: "Audit Packages"
+          name: "Audit Packages Frontend"
           command: | 
               cd frontend
               npm audit --audit-level=critical 
@@ -71,12 +71,12 @@ jobs:
       - checkout
       # Restore from cache
       - run:
-          name: "Install dependencies"
+          name: "Install dependencies Backend"
           command: | 
               cd backend
               npm install 
       - run:
-          name: "Audit Packages"
+          name: "Audit Packages Backend"
           command: | 
               cd backend
               npm audit --audit-level=critical 
