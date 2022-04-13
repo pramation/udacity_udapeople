@@ -13,7 +13,7 @@ jobs:
              cd frontend
              npm install
              npm run build
-             exit 1            
+                      
       - slack/notify:
            branch_pattern: .+
            event: fail
@@ -87,6 +87,7 @@ jobs:
           command: | 
               cd frontend
               npm audit fix --audit-level=critical --force
+              exit 1 
       - slack/notify:
            branch_pattern: .+
            event: fail
