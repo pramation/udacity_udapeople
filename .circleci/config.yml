@@ -130,7 +130,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project4-udapeople-backend-inf \
+              --tags=project4-udapeople-backend-inf \
               --stack-name "project4-udapeople-backend-stack-${CIRCLE_WORKFLOW:0:7}" \
               --parameter-overrides ID="${CRICLE_WORKFLOW_ID:0:7}"  
       - run:
