@@ -130,7 +130,7 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project=project4-udapeople-backend-inf \
+              --tags project=project4-udapeople \
               --stack-name "project4-udapeople-backend-stack-${CIRCLE_WORKFLOW:0:7}" \
               --parameter-overrides ID="${CRICLE_WORKFLOW_ID:0:7}"  
       - run:
@@ -138,10 +138,9 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
-              #--tags project=your-tag \
-              # --stack-name "your front-end stack name with workflow id" \
-              # --parameter-overrides ID="your workflow id"  
-              exit 1
+              --tags project=project4-udapeople \
+              --stack-name "project4-udapeople-frontend-stack-${CIRCLE_WORKFLOW:0:7}" \
+              --parameter-overrides ID="${CRICLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Add back-end ip to ansible inventory
           command: |
