@@ -1,6 +1,22 @@
 version: 2.1
 orbs:
   slack: circleci/slack@4.9.3 
+
+commands:
+  destroy-environment:
+    description: Destroy back-end and front-end cloudformation stacks given a workflow ID
+    parameters:
+      workflow-id:
+        type: string
+        default: "project4-${CIRCLE_WORKFLOW_ID:0:7}"
+    steps:
+      - run:
+          name: Destroy environment
+          when: on_fail
+          command: |
+            aws cloudformation delete-stack --stack-name project4-udapeople-backend-stak-${CIRCLE_WORKFLOW_ID:0:7}
+            aws cloudformation delete-stack --stack-name project4-udapeople-frontend-stak-${CIRCLE_WORKFLOW_ID:0:7}
+            aws s3 rm s3://udapeople-project4-${CIRCLE_WORKFLOW_ID:0:7} --recursive
 jobs:
   build-frontend:
     docker:
@@ -130,9 +146,9 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
-              --tags project="project4-udapeople-BE-tag-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --tags project="project4-udapeople-be-tag-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name "project4-udapeople-backend-stak-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="project4-be-${CIRCLE_WORKFLOW_ID:0:7}"  
+              --parameter-overrides ID="project4-${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Ensure front-end infrastructure exist
           command: |
@@ -140,13 +156,13 @@ jobs:
               --template-file .circleci/files/frontend.yml \
               --tags project="project4-udapeople-FE-tag-${CIRCLE_WORKFLOW_ID:0:7}" \
               --stack-name "project4-udapeople-frontend-stak-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --parameter-overrides ID="project4-fe-${CIRCLE_WORKFLOW_ID:0:7}"  
+              --parameter-overrides ID="project4-${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Add back-end ip to ansible inventory
           command: |
             aws ec2 describe-instances \
               --query 'Reservations[*].Instances[*].PublicIpAddress' \
-              --filters "Name=tag:Name,Values=project4-be-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --filters "Name=tag:Name,Values=project4-${CIRCLE_WORKFLOW_ID:0:7}" \
               --output text >> .circleci/ansible/inventory.txt
             cat .circleci/ansible/inventory.txt  
       - persist_to_workspace:
