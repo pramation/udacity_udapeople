@@ -181,21 +181,19 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: 
-            - ""
+            - "41:99:c0:f0:e0:26:82:51:4e:26:cd:16:7d:05:90:36"
       - attach_workspace:
           at: .     
       - run:
           name: Install dependencies
           command: |
-            apk add --update ansible
+            apk add --update ansible tar gzip
             pip install awscli
-      - create-dotenv-file
       - run:
           name: Configure server
           command: |
             pwd
             cat ./.circleci/ansible/inventory.txt
-            export ANSIBLE_HOST_KEY_CHECKING=false
             ansible-playbook -i ./.circleci/ansible/inventory.txt ./.circleci/ansible/configure-server.yml
 workflows:
   default:
