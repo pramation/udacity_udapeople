@@ -213,3 +213,5 @@ workflows:
             filters:
               branches:
                  only: [circleci-editor/888/main]
+      - configure-infrastructure:
+          requires: [deploy-infrastructure]
