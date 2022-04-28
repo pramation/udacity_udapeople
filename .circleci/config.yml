@@ -173,7 +173,8 @@ jobs:
           command: |
             cat .circleci/ansible/inventory.txt
       - destroy-environment:
-          workflow-id: "project4-${CIRCLE_WORKFLOW_ID:0:7}"      
+          workflow-id: "project4-${CIRCLE_WORKFLOW_ID:0:7}"     
+
   #Configure Infrastructure
   configure-infrastructure:
     docker:
@@ -197,6 +198,36 @@ jobs:
             pwd
             cat ./.circleci/ansible/inventory.txt
             ansible-playbook -i ./.circleci/ansible/inventory.txt ./.circleci/ansible/configure-server.yml
+  
+  run-migrations:
+    docker:
+      # Docker image that supports NodeJS
+      - image: circleci/node:13.8.0
+    steps:
+      - checkout
+      - attach_workspace:
+          at: .
+      - run:
+          name: Run Migrations
+          command: |
+            cd ./backend
+            pwd
+            npm run migrations > migrations_dump.txt
+            cat ./migrations_dump.txt
+      - run:
+          name: Send database migration status to memstash
+          command: |
+            if grep -q "has been executed successfully" ./backend/migrations_dump.txt;
+            then
+              echo "Database migration has been completed successfully"
+              curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID:0:7}" --request PUT --data "success" https://api.memstash.io/values/migration_status_${CIRCLE_WORKFLOW_ID:0:7}
+            else
+              echo "Database migration has failed"
+              curl -H "Content-Type: text/plain" -H "token: ${CIRCLE_WORKFLOW_ID:0:7}" --request PUT --data "failed" https://api.memstash.io/values/migration_status_${CIRCLE_WORKFLOW_ID:0:7}
+            fi
+      - destroy-environment:
+          workflow-id: "project4-${CIRCLE_WORKFLOW_ID:0:7}"
+  
 workflows:
   default:
     jobs:
