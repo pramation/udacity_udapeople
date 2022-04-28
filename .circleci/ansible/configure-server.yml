@@ -22,7 +22,7 @@
       apt:
          update_cache: yes
          name:
-           - python-minimal
+           - python3-minimal
          
 
   # Get the environment variables from CircleCI and add to the EC2 instance
