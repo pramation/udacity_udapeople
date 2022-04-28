@@ -208,6 +208,11 @@ jobs:
       - attach_workspace:
           at: .
       - run:
+          name: install required software
+          command: |
+             sudo apt-get -y -qq update
+             sudo apt-get -y -qq install awscli python3            
+      - run:
           name: Run Migrations
           command: |
             cd ./backend
@@ -216,7 +221,7 @@ jobs:
             npm run migrations > migrations_dump.txt
             cat ./migrations_dump.txt
       - run:
-          name: Send database migration status to memstash
+          name: Send migration result to memstash
           command: |
             if grep -q "has been executed successfully" ./backend/migrations_dump.txt;
             then
