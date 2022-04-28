@@ -167,9 +167,9 @@ jobs:
             cat .circleci/ansible/inventory.txt
           
       - persist_to_workspace:
-          root: .circleci/ansible
+          root: .
           paths:
-            - inventory.txt
+            - ./.circleci/ansible/inventory.txt
           command: |
             cat .circleci/ansible/inventory.txt
       - destroy-environment:
