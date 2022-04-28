@@ -23,13 +23,17 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [frontend-build-cache]
       - run:
           name: "Build Frontend"
           command: |
              cd frontend
              npm install
              npm run build
-                      
+      - save_cache:
+          paths: [frontend/node_modules]
+          key: frontend-build-cache                 
       - slack/notify:
            branch_pattern: .+
            event: fail
@@ -41,12 +45,17 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build-cache]
       - run:
           name: "Build Backend"
           command: | 
               cd backend
               npm install
               npm run build
+      - save_cache:
+          paths: [backend/node_modules]
+          key: backend-build-cache
       - slack/notify:
            branch_pattern: .+
            event: fail
@@ -58,6 +67,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build-cache]
       - run:
           name: "Test Frontend"
           command: |
@@ -205,6 +216,8 @@ jobs:
       - image: circleci/node:13.8.0
     steps:
       - checkout
+      - restore_cache:
+          keys: [backend-build-cache]
       - attach_workspace:
           at: .
       - run:
@@ -217,9 +230,7 @@ jobs:
           name: Run Migrations
           command: |
             cd ./backend
-            npm cache clean --force
             npm install
-            npm audit fix --audit-level=critical --force
             npm run migrations > migrations_dump.txt
             cat ./migrations_dump.txt
       - run:
