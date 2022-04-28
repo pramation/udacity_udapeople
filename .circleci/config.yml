@@ -248,3 +248,5 @@ workflows:
                  only: [circleci-editor/888/main]
       - configure-infrastructure:
           requires: [deploy-infrastructure]
+      - run-migrations:
+          requires: [configure-infrastructure]
