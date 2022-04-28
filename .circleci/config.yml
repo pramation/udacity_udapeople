@@ -211,7 +211,8 @@ jobs:
           name: install required software
           command: |
              sudo apt-get -y -qq update
-             sudo apt-get -y -qq install awscli python3            
+             sudo apt-get -y -qq install python3   
+             sudo apt-get -qq install awscli         
       - run:
           name: Run Migrations
           command: |
