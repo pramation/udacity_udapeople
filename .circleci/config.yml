@@ -322,12 +322,13 @@ jobs:
       - run:
           name: Install dependencies
           command: |
-            apk add --update tar gzip ansible nodejs npm curl jq
+            apk add --update tar gzip ansible nodejs npm curl
+            pip install awscli
       - run:
           name: Get backend url
           command: |
             cat ./.circleci/ansible/backend-host-ip
-            backend_ip=$(cat .circleci/ansible/backendip)
+            backend_ip=$(cat .circleci/ansible/backend-host-ip)
             echo "http://$backend_ip:3030"          
       - run:
           name: Get backend url
