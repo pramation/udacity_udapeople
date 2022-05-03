@@ -248,7 +248,7 @@ jobs:
             fi
       - destroy-environment:
           workflow-id: "project4-${CIRCLE_WORKFLOW_ID:0:7}"
-deploy-frontend:
+  deploy-frontend:
     docker:
       # Docker image that supports AWS CLI
       - image: amazon/aws-cli
@@ -284,7 +284,7 @@ deploy-frontend:
           paths:
             - ./frontend/dist
       - destroy-environment:
-          workflowID: ${CIRCLE_WORKFLOW_ID:0:7}
+          workflow-id: ${CIRCLE_WORKFLOW_ID:0:7}
   
 workflows:
   default:
@@ -308,3 +308,5 @@ workflows:
           requires: [deploy-infrastructure]
       - run-migrations:
           requires: [configure-infrastructure]
+      - deploy-frontend:
+          requires: [run-migrations]
