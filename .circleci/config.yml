@@ -336,7 +336,7 @@ jobs:
       - run:
           name: Frontend smoke test.
           command: |
-            if curl -s  "http://udapeople-project4-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com" | grep "Welcome"
+            if curl -s  "http://udapeople-project4-${CIRCLE_WORKFLOW_ID:0:7}.s3-website-us-east-1.amazonaws.com" | grep -i "Welcome"
             then
               return 0
             else
@@ -370,4 +370,4 @@ workflows:
       - deploy-backend:
           requires: [run-migrations]
       - smoke-test:
-        requires: [deploy-backend, deploy-frontend]
+          requires: [deploy-backend, deploy-frontend]
