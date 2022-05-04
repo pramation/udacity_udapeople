@@ -1,10 +1,25 @@
-- name: Upgrade npm
+- name: "upgrade packages."
   become: true
-  shell: |
-    npm install -g npm@latest
+  apt:
+    upgrade: "yes"
+
+- name: "install dependencies."
+  become: true
+  apt:
+    name: ["nodejs", "npm" , "tar"]
+    update_cache: yes
+
+- name: "install pm2"
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+    state: present
+
 - name: Copy compiled files
   unarchive:
-    src: /root/project/artifact.tar.gz
+    src: /root/project/backend
     dest: /home/ubuntu/
 
 - name: Build backend
@@ -13,7 +28,7 @@
     cd /home/ubuntu/backend
     npm i
     npm run build
-- name: Stop and Delete the existing server
+- name: Stop and delete already running server
   ignore_errors: yes
   shell: |
     pm2 stop backend
