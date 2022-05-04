@@ -297,8 +297,7 @@ jobs:
       - checkout
       - add_ssh_keys:
           fingerprints: 
-            #- "41:99:c0:f0:e0:26:82:51:4e:26:cd:16:7d:05:90:36"
-            - "VnGlHno4XpmR2ebb1qxtm3YMtAnsbaiyr0kv37n5PVY"
+            - "41:99:c0:f0:e0:26:82:51:4e:26:cd:16:7d:05:90:36"
       - attach_workspace:
           at: .
       - restore_cache:
@@ -320,6 +319,7 @@ jobs:
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is --------"
             cat inventory.txt
+            export ANSIBLE_HOST_KEY_CHECKING=false
             ansible-playbook -i inventory.txt deploy-backend.yml -vvv
       - destroy-environment:
           workflow-id: "project4-${CIRCLE_WORKFLOW_ID:0:7}"
