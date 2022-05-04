@@ -300,6 +300,8 @@ jobs:
             - "41:99:c0:f0:e0:26:82:51:4e:26:cd:16:7d:05:90:36"
       - attach_workspace:
           at: .
+      - restore_cache:
+          keys: [backend-build-cache]
       - run:
           name: Install dependencies 
           command: |
@@ -312,7 +314,8 @@ jobs:
           name: Deploy backend
           command: |
             # Zip the directory
-            tar -C backend -czvf artifact.tar.gz .
+            #tar -C backend -czvf artifact.tar.gz .
+            tar czf backend.tar.gz backend/
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is --------"
             cat inventory.txt
@@ -348,7 +351,7 @@ jobs:
             cat .circleci/ansible/backend-host-ip 
             export BACKEND_IP=`cat .circleci/ansible/backend-host-ip`
             echo $BACKEND_IP
-            export API_URL="http://${BACKEND_IP}:3032"
+            export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
