@@ -348,7 +348,7 @@ jobs:
             cat .circleci/ansible/backend-host-ip 
             export BACKEND_IP=`cat .circleci/ansible/backend-host-ip`
             echo $BACKEND_IP
-            export API_URL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${BACKEND_IP}:3032"
             echo "${API_URL}"
             if curl "${API_URL}/api/status" | grep "ok"
             then
