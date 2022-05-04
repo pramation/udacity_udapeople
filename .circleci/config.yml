@@ -316,7 +316,7 @@ jobs:
             cd .circleci/ansible
             echo "Contents  of the inventory.txt file is --------"
             cat inventory.txt
-            ansible-playbook -i ./.circleci/ansible/inventory.txt ./.circleci/ansible/deploy-backend.yml -vvv
+            ansible-playbook -i inventory.txt deploy-backend.yml -vvv
       - destroy-environment:
           workflow-id: "project4-${CIRCLE_WORKFLOW_ID:0:7}"
   smoke-test:
