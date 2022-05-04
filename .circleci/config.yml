@@ -270,6 +270,7 @@ jobs:
             --filters "Name=tag:Name,Values=backend-project4-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text)
             echo $BACKEND_IP > .circleci/ansible/backend-host-ip
+            cd frontend
             echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}" 
