@@ -270,7 +270,7 @@ jobs:
             --filters "Name=tag:Name,Values=backend-project4-${CIRCLE_WORKFLOW_ID:0:7}" \
             --output text)
             echo $BACKEND_IP > .circleci/ansible/backend-host-ip
-            cd frontend
+            echo API_URL="http://${BACKEND_IP}:3030" >> frontend/.env
             export API_URL="http://${BACKEND_IP}:3030"
             echo "${API_URL}" 
             npm install 
@@ -278,6 +278,8 @@ jobs:
       - run:
           name: Deploy frontend objects
           command: |
+            cd frontend
+            tar -czvf artifact-"${CIRCLE_WORKFLOW_ID:0:7}".tar.gz dist
             aws s3 cp ./frontend/dist "s3://udapeople-project4-${CIRCLE_WORKFLOW_ID:0:7}" --recursive
       - persist_to_workspace:
           root: .
