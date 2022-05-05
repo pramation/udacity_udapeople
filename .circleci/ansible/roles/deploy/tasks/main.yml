@@ -1,9 +1,10 @@
 
 ---
-- name: Upgrade npm
+- name: "Install dependencies"
   become: true
-  shell: |
-    npm install -g npm@latest
+  apt: |
+    name:["nodejs", "npm", "tar"]
+    update_cache: yes
 - name: Copy compiled files
   unarchive:
     src: /root/project/backend.tar.gz
