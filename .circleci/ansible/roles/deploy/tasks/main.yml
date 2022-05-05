@@ -42,11 +42,4 @@
 - name: Building node service
   shell: |
     cd /home/ubuntu/backend
-    npm run build
-    npm run prestart:prod
-    
-- name: start pm2 for dist/main.js
-  become: no
-  shell: pm2 start npm -f ./main.js -- run start
-  args:
-    chdir: /home/ubuntu/backend/dist
+    npm run start
