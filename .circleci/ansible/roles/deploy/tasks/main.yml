@@ -1,12 +1,12 @@
 - name: "upgrade packages."
   become: true
-  apt:
-    upgrade: "yes"
+  shell:
+   npm install -g npm@latest
 
 - name: "install dependencies."
   become: true
   apt:
-    name: ["nodejs", "npm" , "tar"]
+    name: ["nodejs" , "tar"]
     update_cache: yes
 
 - name: "install pm2"
