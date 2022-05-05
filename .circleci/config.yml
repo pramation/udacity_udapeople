@@ -310,6 +310,10 @@ jobs:
             apk add --no-cache --upgrade bash
             pip install awscli
       - run:
+          name: Set up inventory.txt
+          command: |
+               cat .circleci/ansible/backend-host-ip>>.circleci/ansibleinventory.txt
+      - run:
           name: Deploy backend
           no_output_timeout: 5m
           command: |
