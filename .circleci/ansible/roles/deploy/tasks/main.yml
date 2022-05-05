@@ -3,7 +3,7 @@
 - name: "Install dependencies"
   become: true
   apt: 
-    name:["nodejs", "npm", "tar"]
+    name: ["nodejs", "npm", "tar"]
     update_cache: yes
 - name: Copy compiled files
   unarchive:
