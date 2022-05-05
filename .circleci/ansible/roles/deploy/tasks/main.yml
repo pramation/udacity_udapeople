@@ -2,7 +2,7 @@
 ---
 - name: "Install dependencies"
   become: true
-  apt: |
+  apt: 
     name:["nodejs", "npm", "tar"]
     update_cache: yes
 - name: Copy compiled files
