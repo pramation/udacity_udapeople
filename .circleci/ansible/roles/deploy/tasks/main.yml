@@ -23,32 +23,20 @@
     src: /root/project/backend
     dest: /home/ubuntu
 
-- name: Install Node modules
+- name: Build backend
+  ignore_errors: yes
   shell: |
     cd /home/ubuntu/backend
     npm install
-    npm install --only=dev
-    
-- name: Building backend service
-  shell: |
-    cd /home/ubuntu/backend
     npm run build
-    npm run prestart:prod
-        
-- name: Executing node
+- name: Stop and delete already running server
+  ignore_errors: yes
+  shell: |
+    pm2 stop backend
+    pm2 delete backend
+- name: Start server
   become: true
   shell: |
     cd /home/ubuntu/backend
     pm2 start npm --name backend -- start
     pm2 ls
-- name: Building node service
-  shell: |
-    cd /home/ubuntu/backend
-    npm run build
-    npm run prestart:prod
-    
-- name: start pm2 for dist/main.js
-  become: no
-  shell: pm2 start npm -f ./main.js -- run start
-  args:
-    chdir: /home/ubuntu/backend/dist
