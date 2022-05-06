@@ -33,7 +33,7 @@ commands:
               SUCCESS=$(curl --insecure https://kvdb.io/PbgDBZHQTuAUT9SR54qYoC/migration_${CIRCLE_WORKFLOW_ID:0:7})
               echo "after success"
               echo "${SUCCESS}"
-              if (( "${SUCCESS}"=="1")); 
+              if  "${SUCCESS}"=="1"; 
               then
                  echo "Reverting the changes"
                  cd ./backend
@@ -262,6 +262,7 @@ jobs:
       - run:
           name: Send migration result to kvdb.io
           command: |
+            cat ./backend/migrations_dump.txt
             if grep -q "has been executed successfully" ./backend/migrations_dump.txt;
             then
               echo "Database migration has been completed successfully"
