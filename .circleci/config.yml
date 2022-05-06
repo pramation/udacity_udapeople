@@ -184,7 +184,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/backend.yml \
               --tags project="project4-udapeople-be-tag-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --stack-name "project4-udapeople-backend-stak-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name "udapeople-backend-project4-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="project4-${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Ensure front-end infrastructure exist
@@ -192,7 +192,7 @@ jobs:
             aws cloudformation deploy \
               --template-file .circleci/files/frontend.yml \
               --tags project="project4-udapeople-FE-tag-${CIRCLE_WORKFLOW_ID:0:7}" \
-              --stack-name "project4-udapeople-frontend-stak-${CIRCLE_WORKFLOW_ID:0:7}" \
+              --stack-name "udapeople-frontend-project4-${CIRCLE_WORKFLOW_ID:0:7}" \
               --parameter-overrides ID="project4-${CIRCLE_WORKFLOW_ID:0:7}"  
       - run:
           name: Add back-end ip to ansible inventory
@@ -463,8 +463,11 @@ jobs:
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
+              echo "Executing ...  aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive ..."
               aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
+              echo "Executing ... aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
               aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
+              echo "Executing... aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}""
               aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
             fi
       - destroy-environment
