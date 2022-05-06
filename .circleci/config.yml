@@ -436,6 +436,7 @@ jobs:
                     --tags project=udapeople-project4 \
                     --stack-name udapeople-cloudfront-project4-${CIRCLE_WORKFLOW_ID:0:7} \
                     --parameter-overrides WorkflowID="project4-${CIRCLE_WORKFLOW_ID:0:7}"
+            echo "udapeople-${WorkflowID}.s3.amazonaws.com"
       - destroy-environment
       - revert-migrations
 workflows:
