@@ -435,7 +435,7 @@ jobs:
                     --template-file .circleci/files/cloudfront.yml \
                     --tags project=udapeople-project4 \
                     --stack-name udapeople-cloudfront-project4-${CIRCLE_WORKFLOW_ID:0:7} \
-                    --parameter-overrides Workflow-id="project4-${CIRCLE_WORKFLOW_ID:0:7}"
+                    --parameter-overrides WorkflowID="project4-${CIRCLE_WORKFLOW_ID:0:7}"
       - destroy-environment
       - revert-migrations
 workflows:
