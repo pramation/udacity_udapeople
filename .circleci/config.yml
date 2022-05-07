@@ -256,7 +256,6 @@ jobs:
           name: Run Migrations
           command: |
             cd ./backend
-            npm run migrations:revert
             npm install
             npm run migrations > migrations_dump.txt
             cat ./migrations_dump.txt
