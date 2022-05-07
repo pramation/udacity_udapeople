@@ -464,7 +464,7 @@ jobs:
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-              export OldWorkflowID1= `cat OldWorkflowID.txt`
+              export OldWorkflowID1= "`cat OldWorkflowID.txt`"
               echo OldWorkflowID: "${OldWorkflowID}"
               echo OldWorkflowID1: "${OldWorkflowID1}"
 
