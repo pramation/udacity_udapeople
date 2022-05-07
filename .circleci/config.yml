@@ -464,16 +464,17 @@ jobs:
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-              ##export OldWorkflowID= `cat OldWorkflowID.txt`
+              export OldWorkflowID1= `cat OldWorkflowID.txt`
               echo OldWorkflowID: "${OldWorkflowID}"
+              echo OldWorkflowID1: "${OldWorkflowID1}"
 
               echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-              echo "Executing ...  aws s3 rm s3://udapeople-${OldWorkflowID} --recursive ..."
-              aws s3 rm "s3://udapeople-${OldWorkflowID}" --recursive
-              echo "Executing ... aws cloudformation delete-stack --stack-name udapeople-backend-${OldWorkflowID}"
-              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID}"
-              echo "Executing... aws cloudformation delete-stack --stack-name udapeople-frontend-${OldWorkflowID}"
-              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID}"
+              echo "Executing ...  aws s3 rm s3://udapeople-${OldWorkflowID1} --recursive ..."
+              aws s3 rm "s3://udapeople-${OldWorkflowID1}" --recursive
+              echo "Executing ... aws cloudformation delete-stack --stack-name udapeople-backend-${OldWorkflowID1}"
+              aws cloudformation delete-stack --stack-name "udapeople-backend-${OldWorkflowID1}"
+              echo "Executing... aws cloudformation delete-stack --stack-name udapeople-frontend-${OldWorkflowID1}"
+              aws cloudformation delete-stack --stack-name "udapeople-frontend-${OldWorkflowID1}"
             fi
       - destroy-environment
       - revert-migrations
