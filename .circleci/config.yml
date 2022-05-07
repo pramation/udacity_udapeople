@@ -256,6 +256,7 @@ jobs:
           name: Run Migrations
           command: |
             cd ./backend
+            npm run migrations:revert
             npm install
             npm run migrations > migrations_dump.txt
             cat ./migrations_dump.txt
@@ -464,6 +465,9 @@ jobs:
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
+            
+              echo "-------------Nothing to Clean up------------"
+            else
               echo "---------------Delete Confirmed-------------"
               #export OldWorkflowID1= "`cat OldWorkflowID.txt`"
               echo OldWorkflowID: "${OldWorkflowID}"
@@ -477,9 +481,7 @@ jobs:
               aws cloudformation delete-stack --stack-name "udapeople-backend-`cat ./OldWorkflowID.txt`"
               echo "Executing... aws cloudformation delete-stack --stack-name udapeople-frontend-`cat ./OldWorkflowID.txt`"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-`cat ./OldWorkflowID.txt`"
-            else
-            echo "-------------Nothing to Clean up------------"
-            
+                      
             fi
       - destroy-environment
       - revert-migrations
