@@ -464,6 +464,9 @@ jobs:
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
+              echo "-------------Nothing to Clean up------------"
+            else
+              echo "---------------Delete Confirmed-------------"
               #export OldWorkflowID1= "`cat OldWorkflowID.txt`"
               echo OldWorkflowID: "${OldWorkflowID}"
               cat ./OldWorkflowID.txt
