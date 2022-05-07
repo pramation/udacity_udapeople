@@ -465,23 +465,13 @@ jobs:
           command: |
             if [[ "${STACKS[@]}" =~ "${OldWorkflowID}" ]]
             then
-            
-              echo "-------------Nothing to Clean up------------"
-            else
               echo "---------------Delete Confirmed-------------"
-              #export OldWorkflowID1= "`cat OldWorkflowID.txt`"
-              echo OldWorkflowID: "${OldWorkflowID}"
               cat ./OldWorkflowID.txt
-
-              echo CIRCLE_WORKFLOW_ID "${CIRCLE_WORKFLOW_ID:0:7}"
-              echo "Executing ...  aws s3 rm s3://udapeople-${OldWorkflowID} --recursive ..."
-              echo "Executing ...  aws s3 rm s3://udapeople-`cat ./OldWorkflowID.txt` --recursive ..."
               aws s3 rm "s3://udapeople-`cat ./OldWorkflowID.txt`" --recursive
-              echo "Executing ... aws cloudformation delete-stack --stack-name udapeople-backend-`cat ./OldWorkflowID.txt`"
               aws cloudformation delete-stack --stack-name "udapeople-backend-`cat ./OldWorkflowID.txt`"
-              echo "Executing... aws cloudformation delete-stack --stack-name udapeople-frontend-`cat ./OldWorkflowID.txt`"
               aws cloudformation delete-stack --stack-name "udapeople-frontend-`cat ./OldWorkflowID.txt`"
-                      
+            else
+              echo "-------------Nothing to Clean up------------"                     
             fi
       - destroy-environment
       - revert-migrations
