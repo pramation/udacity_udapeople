@@ -446,7 +446,7 @@ jobs:
     steps:
       - checkout 
       - run:
-          name: Get old stack workflow id
+          name: Get old Stack workflow id
           command: |
             # your code here
             # Fetch the Old workflow ID
